@@ -8,7 +8,7 @@ use Rack::ShowExceptions
 
 class OpenIDer
   
-  attr_accessor :env
+  attr_accessor :env, :options
   
   def initialize(app, options ={})
     @app = app
@@ -33,14 +33,19 @@ class OpenIDer
     if resp = env["rack.openid.response"]
       case resp.status
       when :success
-        #... forward to
+        #... save id and forward to ...
+        self.verified_identity = resp.identity_url
         forward_to(protected_path)
       when :failure
-        #...
-        forward_to(login_path)
+        if login_path
+          forward_to(login_path)
+        else
+          
+        end
       end
     else
       self.protected_path = env['REQUEST_PATH']
+      puts identitifier_to_verify
       [401, {"WWW-Authenticate" => "OpenID identifier=\"#{identitifier_to_verify}\""}, []]
     end
     
@@ -50,16 +55,28 @@ class OpenIDer
     [302, {'Location' => url}, ["Forwarding to #{url}"]]
   end
   
+  def login_page
+    
+  end
+  
   def allowed?
     allowed_identifiers.include? verified_identity
   end
   
   def allowed_identifiers
-    options['allowed_identifiers']
+    options[:allowed_identifiers]
+  end
+  
+  def login_path
+    options[:login_path]
   end
   
   def identitifier_to_verify
     env["rack.request.query_hash"]["open_id_identifier"]
+  end
+  
+  def verified_identity=(url)
+    session['verified_identity'] = url
   end
   
   def verified_identity
@@ -75,7 +92,11 @@ class OpenIDer
   end
   
   def protected_path
-    session['return_to'] ||
+    session['return_to'] || default_return_to
+  end
+  
+  def default_return_to
+    options['default_return_to'] || '/'
   end
   
   def success
@@ -95,12 +116,12 @@ end
 
 class HelloWorld
   def call(env)
-    [200, {"Content-Type" => "text/plain"}, ["Hello world!"]]
+    [200, {"Content-Type" => "text/plain"}, ["Made it through!"]]
   end
 end
 
 
 use Rack::Session::Cookie
 use Rack::OpenID
-use OpenIDer
+use OpenIDer, :allowed_identifiers => ['http://samsm.com/']
 run HelloWorld.new
