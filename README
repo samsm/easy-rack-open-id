@@ -1,0 +1,23 @@
+OpenIDer. Simplifies OpenID login for Rack apps.
+
+Get Rack::OpenID of http://github.com/josh/rack-openid
+gem install rack-openid
+
+
+You:
+require 'rack/openid'
+use Rack::Session::Cookie
+use Rack::OpenID
+use OpenIDer, :allowed_identifiers => ['http://example.com/']
+run lambda {|env| [ 200, { 'Content-Type' => 'text/plain' }, [ 'Authenticated!' ] ] }
+
+
+Basically, slap OpenIDer in front of the App you want to protect. Rack::OpenID needs to be above it.
+Rack:OpenID with noo arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun. You can pass it a different store like so:
+use Rack::OpenID, OpenID::Store::Memcache.new
+
+:allowed_identifiers is required for OpenIDer to work. Give it an array of all the OpenIDs that you don't mind proceeding.
+
+:default_return_to (optional) is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
+
+:login_path (optional) is where to send a user if login fails. Perhaps a login form?
