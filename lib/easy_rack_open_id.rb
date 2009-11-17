@@ -9,6 +9,7 @@ class EasyRackOpenID
   
   def call(env)
     @env = env
+    logout if logout_path == path
     if allowed?
       # pass through
       @app.call(env)
@@ -29,15 +30,18 @@ class EasyRackOpenID
         present_login_options
       end
     else
-      puts 'verify'
       if identitifier_to_verify
-        self.protected_path = env['REQUEST_PATH']
+        self.protected_path = path
         [401, {"WWW-Authenticate" => "OpenID identifier=\"#{identitifier_to_verify}\""}, []]
       else
         present_login_options
       end
     end
     
+  end
+  
+  def path
+    env['REQUEST_PATH']
   end
   
   def present_login_options
@@ -62,12 +66,20 @@ class EasyRackOpenID
     options[:allowed_identifiers]
   end
   
+  def logout_path
+    options[:logout_path] || '/logout'
+  end
+  
   def login_path
     options[:login_path]
   end
   
   def identitifier_to_verify
     env["rack.request.query_hash"]["openid_identifier"]
+  end
+  
+  def logout
+    self.verified_identity = nil
   end
   
   def verified_identity=(url)
@@ -92,18 +104,6 @@ class EasyRackOpenID
   
   def default_return_to
     options[:default_return_to] || '/'
-  end
-  
-  def success
-    [200,{"Content-Type" => 'text/html'},'great success']
-  end
-  
-  def fail
-    [200,{"Content-Type" => 'text/html'},'fail!']
-  end
-  
-  def openid
-    [200,{"Content-Type" => 'text/html'},'openid']
   end
   
   def ok(text)

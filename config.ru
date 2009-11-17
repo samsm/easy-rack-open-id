@@ -2,7 +2,7 @@ require 'ruby-debug'
 require 'rubygems'
 require 'rack'
 require 'rack/openid'
-require 'lib/openider'
+require 'lib/easy_rack_open_id'
 
 use Rack::ShowExceptions
 
@@ -17,5 +17,5 @@ end
 
 use Rack::Session::Cookie
 use Rack::OpenID
-use OpenIDer, :allowed_identifiers => ['http://samsm.com/']
+use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/']
 run HelloWorld.new

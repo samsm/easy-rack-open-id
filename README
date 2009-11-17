@@ -21,3 +21,5 @@ use Rack::OpenID, OpenID::Store::Memcache.new
 :default_return_to (optional) is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
 
 :login_path (optional) is where to send a user if login fails. Perhaps a login form?
+
+:logout_path (optional, defaults to /logout) path that, when visited will clear the login session
