@@ -18,7 +18,11 @@ Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::Op
 Rack:OpenID with noo arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun. You can pass it a different store like so:
 use Rack::OpenID, OpenID::Store::Memcache.new
 
-:allowed_identifiers is required for EasyRackOpenID to work. Give it an array of all the OpenIDs that you don't mind proceeding.
+With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
+
+If you use :allowed_identifiers, only identities in the provided array will be allowed access.
+
+
 
 :default_return_to (optional) is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
 

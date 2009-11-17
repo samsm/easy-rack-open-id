@@ -62,7 +62,11 @@ class EasyRackOpenID
   end
   
   def allowed?
-    allowed_identifiers.include? verified_identity
+    if allowed_identifiers
+      allowed_identifiers.include? verified_identity
+    else
+      verified_identity
+    end
   end
   
   def allowed_identifiers
