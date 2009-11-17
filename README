@@ -20,9 +20,11 @@ use Rack::OpenID, OpenID::Store::Memcache.new
 
 With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
-If you use :allowed_identifiers, only identities in the provided array will be allowed access.
+:allowed_identifiers - when used, only identities in the provided array will be allowed access.
 
+:identity_match - when used, only identities matching this regex pattern will be allowed.
 
+Right now allowed_identifiers and identity_match cannot both be used at once.
 
 :default_return_to (optional) is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
 

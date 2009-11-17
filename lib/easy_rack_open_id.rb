@@ -64,9 +64,15 @@ class EasyRackOpenID
   def allowed?
     if allowed_identifiers
       allowed_identifiers.include? verified_identity
+    elsif identity_match
+      identity_match === verified_identity
     else
       verified_identity
     end
+  end
+  
+  def identity_match
+    options[:identity_match]
   end
   
   def allowed_identifiers
