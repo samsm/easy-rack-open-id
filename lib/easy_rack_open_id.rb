@@ -9,7 +9,10 @@ class EasyRackOpenID
   
   def call(env)
     @env = env
-    logout if logout_path == path
+    if logout_path == path
+      logout_result = logout
+      return logout_result if logout_result
+    end
     if allowed?
       # pass through
       @app.call(env)
@@ -70,16 +73,23 @@ class EasyRackOpenID
     options[:logout_path] || '/logout'
   end
   
+  def logout
+    self.verified_identity = nil
+    if after_logout_path
+      forward_to(after_logout_path)
+    end
+  end
+  
+  def after_logout_path
+    options[:after_logout_path]
+  end
+  
   def login_path
     options[:login_path]
   end
   
   def identitifier_to_verify
     env["rack.request.query_hash"]["openid_identifier"]
-  end
-  
-  def logout
-    self.verified_identity = nil
   end
   
   def verified_identity=(url)

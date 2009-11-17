@@ -23,3 +23,5 @@ use Rack::OpenID, OpenID::Store::Memcache.new
 :login_path (optional) is where to send a user if login fails. Perhaps a login form?
 
 :logout_path (optional, defaults to /logout) path that, when visited will clear the login session
+
+:after_logout_path (optional) After a user logs out, send them here. (don't want the user sitting on the logout path)

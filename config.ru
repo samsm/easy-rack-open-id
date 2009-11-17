@@ -17,5 +17,5 @@ end
 
 use Rack::Session::Cookie
 use Rack::OpenID
-use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/']
+use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/'], :after_logout_path => '/login'
 run HelloWorld.new
