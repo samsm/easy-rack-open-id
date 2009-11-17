@@ -1,12 +1,9 @@
-require 'ruby-debug'
 require 'rubygems'
 require 'rack'
 require 'rack/openid'
 require 'lib/easy_rack_open_id'
 
 use Rack::ShowExceptions
-
-
 
 class HelloWorld
   def call(env)
@@ -17,5 +14,5 @@ end
 
 use Rack::Session::Cookie
 use Rack::OpenID
-use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/'], :after_logout_path => '/login'
+use EasyRackOpenID, :allowed_identifiers => ['http://example.com/'], :after_logout_path => '/login'
 run HelloWorld.new
