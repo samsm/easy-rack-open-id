@@ -1,4 +1,4 @@
-class OpenIDer
+class EasyRackOpenID
   
   attr_accessor :env, :options
   
