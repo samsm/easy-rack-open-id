@@ -2,7 +2,7 @@ EasyRackOpenID. Simplifies OpenID login for Rack apps.
 
 Get Rack::OpenID of http://github.com/josh/rack-openid
 gem install rack-openid
-
+gem install easy-rack-open-id
 
 You:
 require 'rack/openid'
