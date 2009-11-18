@@ -12,7 +12,10 @@ class HelloWorld
 end
 
 
+# require 'openid_mongodb_store'
+# MongoMapper.database = 'testorama'
+
 use Rack::Session::Cookie
-use Rack::OpenID
+use Rack::OpenID #, OpenidMongodbStore::Store.new
 use EasyRackOpenID, :allowed_identifiers => ['http://example.com/'], :after_logout_path => '/login'
 run HelloWorld.new

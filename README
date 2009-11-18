@@ -15,8 +15,13 @@ There's an example in config.ru
 
 
 Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::OpenID needs to be above it.
-Rack:OpenID with noo arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun. You can pass it a different store like so:
-use Rack::OpenID, OpenID::Store::Memcache.new
+Rack:OpenID with no arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun. You can pass it a different store like so:
+
+require 'openid_mongodb_store' # http://github.com/samsm/openid_mongodb_store
+MongoMapper.database = 'testorama'
+MongoMapper.database.authorize('username','password')
+use Rack::OpenID, OpenidMongodbStore::Store.new
+
 
 With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
