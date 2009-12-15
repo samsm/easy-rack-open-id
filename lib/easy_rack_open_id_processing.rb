@@ -1,7 +1,6 @@
-require File.dirname(__FILE__) + '/easy_rack_open_id_processing'
-class EasyRackOpenID
+class EasyRackOpenIDProcessing
   
-  # attr_accessor :env, :options
+  attr_accessor :env, :options
   
   def initialize(app, options ={})
     @app = app
@@ -9,7 +8,21 @@ class EasyRackOpenID
   end
   
   def call(env)
-    EasyRackOpenIDProcessing.new(@app,@options).call(env)
+    @env = env
+    if logout_path == path
+      logout_result = logout
+      return logout_result if logout_result
+    end
+    if asset?
+      content_type_lookup = {'css' => 'text/css','html'=> 'text/html','js'=>'text/javascript','gif'=>'image/gif','ico' => 'image/vnd.microsoft.icon'}
+      ok(IO.read(gem_public_path + path), content_type_lookup[File.extname(path)[1..-1]])
+    elsif allowed?
+      # pass through
+      @app.call(env)
+    else
+      # break chain, start open_id_login
+      open_id_login
+    end
   end
   
   def asset?
@@ -130,8 +143,6 @@ class EasyRackOpenID
   end
   
   def ok(text, content_type = 'text/html')
-    puts
-    puts "2. Content type: #{content_type} for #{path}"
     [200,{"Content-Type" => content_type, 'Content-Length'=> text.length},[text]]
   end
 
