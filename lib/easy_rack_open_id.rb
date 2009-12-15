@@ -13,13 +13,28 @@ class EasyRackOpenID
       logout_result = logout
       return logout_result if logout_result
     end
-    if allowed?
+    if asset?
+      content_type_lookup = {'css' => 'text/css','html'=> 'text/html','js'=>'text/javascript','gif'=>'image/gif','ico' => 'image/vnd.microsoft.icon'}
+      ok(IO.read(gem_public_path + path), content_type_lookup[File.extname(path)[1..-1]])
+    elsif allowed?
       # pass through
       @app.call(env)
     else
       # break chain, start open_id_login
       open_id_login
     end
+  end
+  
+  def asset?
+    0 == path.index(asset_prefix)
+  end
+  
+  def asset_prefix
+    '/easy-rack-openid-assets'
+  end
+  
+  def gem_public_path
+    File.dirname(__FILE__) + '/../public/'
   end
   
   def open_id_login
@@ -35,6 +50,7 @@ class EasyRackOpenID
     else
       if identitifier_to_verify
         self.protected_path = path
+        puts "Authenticating #{identitifier_to_verify}"
         [401, {"WWW-Authenticate" => "OpenID identifier=\"#{identitifier_to_verify}\""}, []]
       else
         present_login_options
@@ -52,7 +68,8 @@ class EasyRackOpenID
       forward_to(login_path)
     else
       dir = File.dirname(__FILE__)
-      form = IO.read(dir + '/generic_openid_form.html.erb')
+      # form = IO.read(dir + '/generic_openid_form.html.erb')
+      form = IO.read(dir + '/nice_openid_form.html.erb')
       ok(form)
     end
   end
@@ -126,8 +143,8 @@ class EasyRackOpenID
     options[:default_return_to] || '/'
   end
   
-  def ok(text)
-    [200,{"Content-Type" => 'text/html', 'Content-Length'=> text.length},text]
+  def ok(text, content_type = 'text/html')
+    [200,{"Content-Type" => content_type, 'Content-Length'=> text.length},text]
   end
 
 end
