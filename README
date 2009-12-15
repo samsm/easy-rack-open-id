@@ -22,7 +22,6 @@ MongoMapper.database = 'testorama'
 MongoMapper.database.authorize('username','password')
 use Rack::OpenID, OpenidMongodbStore::Store.new
 
-
 With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
 :allowed_identifiers - when used, only identities in the provided array will be allowed access.
@@ -38,3 +37,5 @@ Right now allowed_identifiers and identity_match cannot both be used at once.
 :logout_path (optional, defaults to /logout) path that, when visited will clear the login session
 
 :after_logout_path (optional) After a user logs out, send them here. (don't want the user sitting on the logout path)
+
+This package includes a pretty default login form from the "openid-selector" project. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
