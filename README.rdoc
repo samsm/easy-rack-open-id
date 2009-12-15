@@ -1,10 +1,10 @@
-EasyRackOpenID. Simplifies OpenID login for Rack apps.
+= EasyRackOpenID. Simplifies OpenID login for Rack apps.
 
-Get Rack::OpenID of http://github.com/josh/rack-openid
-gem install rack-openid
+== Installation
 gem install easy-rack-open-id
+(depends on rack-openid which depends on ruby-openid)
 
-You:
+Then, you:
 require 'rack/openid'
 use Rack::Session::Cookie
 use Rack::OpenID
@@ -15,12 +15,17 @@ There's an example in config.ru
 
 
 Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::OpenID needs to be above it.
-Rack:OpenID with no arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun. You can pass it a different store like so:
+
+== OpenID stores
+
+OpenID needs some storage to remember cryptographic nuts and bolts. Rack:OpenID with no arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun and multiple servers. You can pass it a different store like so:
 
 require 'openid_mongodb_store' # http://github.com/samsm/openid_mongodb_store
 MongoMapper.database = 'testorama'
 MongoMapper.database.authorize('username','password')
 use Rack::OpenID, OpenidMongodbStore::Store.new
+
+== Options
 
 With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
@@ -38,4 +43,5 @@ Right now allowed_identifiers and identity_match cannot both be used at once.
 
 :after_logout_path (optional) After a user logs out, send them here. (don't want the user sitting on the logout path)
 
+== OpenID Selector
 This package includes a pretty default login form from the "openid-selector" project. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
