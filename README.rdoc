@@ -5,11 +5,11 @@ gem install easy-rack-open-id
 (depends on rack-openid which depends on ruby-openid)
 
 Then, you:
-require 'rack/openid'
-use Rack::Session::Cookie
-use Rack::OpenID
-use EasyRackOpenID, :allowed_identifiers => ['http://example.com/']
-run lambda {|env| [ 200, { 'Content-Type' => 'text/plain' }, [ 'Authenticated!' ] ] }
+  require 'rack/openid'
+  use Rack::Session::Cookie
+  use Rack::OpenID
+  use EasyRackOpenID, :allowed_identifiers => ['http://example.com/']
+  run lambda {|env| [ 200, { 'Content-Type' => 'text/plain' }, [ 'Authenticated!' ] ] }
 
 There's an example in config.ru
 
@@ -20,10 +20,10 @@ Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::Op
 
 OpenID needs some storage to remember cryptographic nuts and bolts. Rack:OpenID with no arguments uses an in memory OpenID store. This is ok for trying out with rackup, but won't work in a variety of scenarios including using shotgun and multiple servers. You can pass it a different store like so:
 
-require 'openid_mongodb_store' # http://github.com/samsm/openid_mongodb_store
-MongoMapper.database = 'testorama'
-MongoMapper.database.authorize('username','password')
-use Rack::OpenID, OpenidMongodbStore::Store.new
+  require 'openid_mongodb_store' # http://github.com/samsm/openid_mongodb_store
+  MongoMapper.database = 'testorama'
+  MongoMapper.database.authorize('username','password')
+  use Rack::OpenID, OpenidMongodbStore::Store.new
 
 == Options
 
