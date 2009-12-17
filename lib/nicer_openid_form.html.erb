@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Log In</title>
+    <link rel="stylesheet" href="/easy-rack-openid-assets/openid-realselector/css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+    <script type="text/javascript" src="/easy-rack-openid-assets/openid-realselector/js/jquery.openid.js"></script>
+    <script type="text/javascript"><!--//
+    $(function() {
+      $('#openid').openid({
+        img_path: '{{ MEDIA_URL }}img/openid/' //,
+        // txt: {
+        //   label: 'Ingresá tu {username} de <b>{provider}</b>',
+        //   username: 'usuario',
+        //   title: 'Seleccioná la página donde tengas una cuenta.',
+        //   sign: 'Ir'
+        // }
+      });
+    });
+    //--></script>
+  </head>
+  <body>
+    <h2>Log in with OpenID</h2>
+    <p>Click the icon of the account you want to use, or enter your OpenID if you know it.</p>
+    <br/>
+    
+    <form method="post" action="." id="openid">
+      <input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
+      <input id="openid_submit" type="submit" value="Sign-In"/>
+    </form>
+  </body>
+</html>

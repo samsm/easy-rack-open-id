@@ -14,7 +14,7 @@ class EasyRackOpenIDProcessing
       return logout_result if logout_result
     end
     if asset?
-      content_type_lookup = {'css' => 'text/css','html'=> 'text/html','js'=>'text/javascript','gif'=>'image/gif','ico' => 'image/vnd.microsoft.icon'}
+      content_type_lookup = {'css' => 'text/css','html'=> 'text/html','js'=>'text/javascript','gif'=>'image/gif','ico' => 'image/vnd.microsoft.icon', 'png'=> 'image/png'}
       ok(IO.read(gem_public_path + path), content_type_lookup[File.extname(path)[1..-1]])
     elsif allowed?
       # pass through
@@ -68,7 +68,8 @@ class EasyRackOpenIDProcessing
     else
       dir = File.dirname(__FILE__)
       # form = IO.read(dir + '/generic_openid_form.html.erb')
-      form = IO.read(dir + '/nice_openid_form.html.erb')
+      # form = IO.read(dir + '/nice_openid_form.html.erb')
+      form = IO.read(dir + '/nicer_openid_form.html.erb')
       ok(form)
     end
   end
