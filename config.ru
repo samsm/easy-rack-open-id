@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'rack'
-require 'rack/openid'
+# require 'rack/openid'
+require 'vendor/rack-openid/lib/rack/openid'
 require 'lib/easy_rack_open_id'
 
 use Rack::ShowExceptions
@@ -14,6 +15,7 @@ end
 
 # require 'openid_mongodb_store'
 # MongoMapper.database = 'testorama'
+puts "Remember shotgun won't work with memory store!"
 
 use Rack::Session::Cookie
 use Rack::OpenID #, OpenidMongodbStore::Store.new
