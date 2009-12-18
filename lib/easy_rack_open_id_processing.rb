@@ -67,9 +67,14 @@ class EasyRackOpenIDProcessing
       forward_to(login_path)
     else
       dir = File.dirname(__FILE__)
-      # form = IO.read(dir + '/generic_openid_form.html.erb')
-      # form = IO.read(dir + '/nice_openid_form.html.erb')
-      form = IO.read(dir + '/nicer_openid_form.html.erb')
+      form = case options[:form]
+      when 'boring'
+        IO.read(dir + '/generic_openid_form.html.erb')
+      when 'selector'
+        IO.read(dir + '/nice_openid_form.html.erb')
+      else # use default, real-openid selector
+        IO.read(dir + '/nicer_openid_form.html.erb')
+      end
       ok(form)
     end
   end

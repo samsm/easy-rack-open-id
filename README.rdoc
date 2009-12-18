@@ -35,13 +35,15 @@ With no arguments, EasyRackOpenID will only allow users with a verified OpenID t
 
 Right now allowed_identifiers and identity_match cannot both be used at once.
 
-:default_return_to (optional) is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
+:default_return_to is a path just in case the automatic return_to mysteriously vanishes. Unlikely.
 
-:login_path (optional) is where to send a user if login fails. Perhaps a login form?
+:login_path is where to send a user if login fails. Perhaps a login form?
 
-:logout_path (optional, defaults to /logout) path that, when visited will clear the login session
+:logout_path (defaults to /logout) path that, when visited will clear the login session.
 
-:after_logout_path (optional) After a user logs out, send them here. (don't want the user sitting on the logout path)
+:after_logout_path After a user logs out, send them here (don't want the user sitting on the logout path).
+
+:form picks which style of openid form is used for login. Choose from 'boring', 'selector', 'real-selector' (default).
 
 == OpenID Selector
 This package includes a pretty default login form from the "openid-selector" project. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
