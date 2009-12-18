@@ -116,7 +116,17 @@ class EasyRackOpenIDProcessing
   end
   
   def identitifier_to_verify
-    env["rack.request.query_hash"]["openid_identifier"]
+    @identitifier_to_verify ||=
+    if env["rack.request.query_hash"] && env["rack.request.query_hash"]["openid_identifier"]
+      env["rack.request.query_hash"]["openid_identifier"]
+    elsif posted_data = CGI.parse(env['rack.input'].read)
+      identifier = posted_data['openid_identifier']
+      if identifier.kind_of? Array
+        identifier.last
+      else
+        identifier
+      end
+    end
   end
   
   def verified_identity=(url)

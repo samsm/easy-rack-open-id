@@ -34,7 +34,7 @@ Martin Conte Mac Donell <Reflejo@gmail.com>
           url: 'http://yahoo.com/',
           label: null,
           big: true
-        },    
+        },
         {
           name: 'AOL',
           username_txt: 'screenname',
@@ -93,7 +93,7 @@ Martin Conte Mac Donell <Reflejo@gmail.com>
     };
   
     var getBox = function(provider, idx, box_size) {
-      var a = $('<a title="' + provider + '" href="#" id="btn_' + idx + 
+      var a = $('<a title="' + provider + '" href="#" id="btn_' + idx +
                 '" class="openid_' + box_size + '_btn ' + provider + '" />');
       return a.click(signIn);
     };
@@ -101,14 +101,14 @@ Martin Conte Mac Donell <Reflejo@gmail.com>
     var setCookie = function(value) {
       var date = new Date();
       date.setTime(date.getTime() + (settings.cookie_expires * 24 * 60 * 60 * 1000));
-      document.cookie = "openid_prov=" + value + "; expires=" + date.toGMTString() + 
+      document.cookie = "openid_prov=" + value + "; expires=" + date.toGMTString() +
                         "; path=" + settings.cookie_path;
     };
   
     var readCookie = function(){
       var c = document.cookie.split(';');
       for(i in c){
-        if ((pos = c[i].indexOf("openid_prov=")) != -1) 
+        if ((pos = c[i].indexOf("openid_prov=")) != -1)
           return $.trim(c[i].slice(pos + 12));
       }
     };
@@ -150,7 +150,7 @@ Martin Conte Mac Donell <Reflejo@gmail.com>
   
     var submit = function(){
       var prov = (gprovider.url) ? gprovider.url.replace('{username}', $('#' + INPUTID).val()): $('#' + INPUTID).val();
-      form.append($('<input type="hidden" name="url" value="' + prov + '" />'));
+      form.append($('<input type="hidden" name="openid_identifier" value="' + prov + '" />'));
     };
   
     var settings = $.extend(defaults, opt || {});
