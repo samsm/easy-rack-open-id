@@ -48,14 +48,13 @@ class EasyRackOpenIDProcessing
         present_login_options
       end
     else
-      if identitifier_to_verify
+      if identitifier_to_verify && valid_identifier?
         self.protected_path = path
         [401, {"WWW-Authenticate" => "OpenID identifier=\"#{identitifier_to_verify}\""}, []]
       else
         present_login_options
       end
     end
-    
   end
   
   def path
@@ -125,6 +124,7 @@ class EasyRackOpenIDProcessing
     if env["rack.request.query_hash"] && env["rack.request.query_hash"]["openid_identifier"]
       env["rack.request.query_hash"]["openid_identifier"]
     elsif posted_data = CGI.parse(env['rack.input'].read)
+      env['rack.input'].rewind
       identifier = posted_data['openid_identifier']
       if identifier.kind_of? Array
         identifier.last
@@ -132,6 +132,16 @@ class EasyRackOpenIDProcessing
         identifier
       end
     end
+  end
+  
+  def valid_identifier?
+    uri = URI.parse(identitifier_to_verify.to_s.strip)
+    uri = URI.parse("http://#{uri}") unless uri.scheme
+    uri.scheme = uri.scheme.downcase  # URI should do this
+    uri.normalize.to_s
+  rescue URI::InvalidURIError
+    # raise InvalidOpenId.new("#{url} is not an OpenID URL")
+    false
   end
   
   def verified_identity=(url)
