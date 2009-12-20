@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{easy-rack-open-id}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sam Schenkman-Moore"]
-  s.date = %q{2009-12-15}
+  s.date = %q{2009-12-20}
   s.description = %q{You supply OpenIDs, this keeps anyone but people with access to those ids from getting through. You don't even have to make a form. :)}
   s.email = %q{samsm@samsm.com}
   s.extra_rdoc_files = [
@@ -21,10 +21,19 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "config.ru",
+     "easy-rack-open-id.gemspec",
      "lib/easy_rack_open_id.rb",
      "lib/easy_rack_open_id_processing.rb",
      "lib/generic_openid_form.html.erb",
      "lib/nice_openid_form.html.erb",
+     "lib/nicer_openid_form.html.erb",
+     "public/easy-rack-openid-assets/openid-realselector/css/style.css",
+     "public/easy-rack-openid-assets/openid-realselector/demo.html",
+     "public/easy-rack-openid-assets/openid-realselector/img/balloon.png",
+     "public/easy-rack-openid-assets/openid-realselector/img/indicator.gif",
+     "public/easy-rack-openid-assets/openid-realselector/img/openid-icons.png",
+     "public/easy-rack-openid-assets/openid-realselector/js/jquery.openid.js",
+     "public/easy-rack-openid-assets/openid-realselector/js/jquery.openid.min.js",
      "public/easy-rack-openid-assets/openid-selector/css/openid.css",
      "public/easy-rack-openid-assets/openid-selector/demo.html",
      "public/easy-rack-openid-assets/openid-selector/images/aol.gif",
