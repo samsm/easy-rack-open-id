@@ -19,5 +19,5 @@ puts "Remember shotgun won't work with memory store!"
 
 use Rack::Session::Cookie
 use Rack::OpenID #, OpenidMongodbStore::Store.new
-use EasyRackOpenID, :allowed_identifiers => ['http://example.com/'], :after_logout_path => '/login'
+use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/'], :after_logout_path => '/login', :required => ['nickname']
 run HelloWorld.new

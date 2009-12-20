@@ -41,8 +41,20 @@ class EasyRackOpenIDProcessing
     if resp = env["rack.openid.response"]
       case resp.status
       when :success
-        #... save id and forward to ...
-        self.verified_identity = resp.identity_url
+        
+        # Load in any registration data gathered
+        profile_data = {}
+        # merge the SReg data and the AX data into a single hash of profile data
+        [ OpenID::SReg::Response, OpenID::AX::FetchResponse ].each do |data_response|
+          if data_response.from_success_response( resp )
+            profile_data.merge! data_response.from_success_response( resp ).data
+          end
+        end
+        
+        profile_data['identifier'] = resp.identity_url
+        # require 'ruby-debug' ; debugger
+        #... save id and registration and forward to ...
+        self.verified_identity = profile_data
         forward_to(protected_path)
       when :failure
         present_login_options
@@ -50,7 +62,11 @@ class EasyRackOpenIDProcessing
     else
       if identitifier_to_verify && valid_identifier?
         self.protected_path = path
-        [401, {"WWW-Authenticate" => "OpenID identifier=\"#{identitifier_to_verify}\""}, []]
+        header_hash =  {:identifier => identitifier_to_verify}
+          header_hash.merge!(:required => options[:required]) if options[:required]
+          header_hash.merge!(:required => options[:optional]) if options[:optional]
+          header_hash.merge!(:required => options[:policy_url]) if options[:policy_url]
+        [401, {"WWW-Authenticate" => Rack::OpenID.build_header(header_hash)}, []]
       else
         present_login_options
       end
@@ -84,11 +100,11 @@ class EasyRackOpenIDProcessing
   
   def allowed?
     if allowed_identifiers
-      allowed_identifiers.include? verified_identity
+      allowed_identifiers.include? verified_identifier
     elsif identity_match
-      identity_match === verified_identity
+      identity_match === verified_identifier
     else
-      verified_identity
+      verified_identifier
     end
   end
   
@@ -144,12 +160,16 @@ class EasyRackOpenIDProcessing
     false
   end
   
-  def verified_identity=(url)
-    session['verified_identity'] = url
+  def verified_identity=(hash)
+    session['verified_identity'] = hash
   end
   
   def verified_identity
     session['verified_identity']
+  end
+  
+  def verified_identifier
+    verified_identity  && verified_identity['identifier']
   end
   
   def session

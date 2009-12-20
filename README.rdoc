@@ -14,7 +14,10 @@ Then, you:
 There's an example in config.ru
 
 
-Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::OpenID needs to be above it.
+Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::OpenID needs to be above it. Data from the login (identifier, registration info) will be made available in session[:verified_identity]
+
+  session['verified_identity']['identifier'] # http://samsm.com/
+  session['verified_identity']['nickname']   # samsm
 
 == OpenID stores
 
@@ -25,7 +28,7 @@ OpenID needs some storage to remember cryptographic nuts and bolts. Rack:OpenID 
   MongoMapper.database.authorize('username','password')
   use Rack::OpenID, OpenidMongodbStore::Store.new
 
-== Options
+== Too Many Options!
 
 With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
@@ -43,7 +46,15 @@ Right now allowed_identifiers and identity_match cannot both be used at once.
 
 :after_logout_path After a user logs out, send them here (don't want the user sitting on the logout path).
 
-:form picks which style of openid form is used for login. Choose from 'boring', 'selector', 'real-selector' (default).
+:form picks which style of openid form is used for login. Choose from 'boring', 'selector', and 'real-selector' (default).
 
-== OpenID Selector
-This package includes a pretty default login form from the "openid-selector" project. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
+== Registration options
+
+:required an array of what simple registration/attribute exchange details you want to fetch about a person.
+
+:optional like above, registration
+
+:policy_url
+
+== OpenID Selector, Real-selector
+This package includes nice-looking default login forms from the "openid-selector" and "real-openid-selector" projects. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
