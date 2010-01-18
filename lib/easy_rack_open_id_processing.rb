@@ -41,7 +41,6 @@ class EasyRackOpenIDProcessing
     if resp = env["rack.openid.response"]
       case resp.status
       when :success
-
         # Load in any registration data gathered
         profile_data = {}
         # merge the SReg data and the AX data into a single hash of profile data
@@ -94,7 +93,7 @@ class EasyRackOpenIDProcessing
   end
 
   def forward_to(url)
-    [302, {'Location' => url}, ["Forwarding to #{url}"]]
+    [302, {'Location' => url,'Content-Type' => 'text/html'}, ["Forwarding to #{url}"]]
   end
 
   def allowed?
@@ -156,7 +155,7 @@ class EasyRackOpenIDProcessing
     uri.normalize.to_s
   rescue URI::InvalidURIError
     # raise InvalidOpenId.new("#{url} is not an OpenID URL")
-    false
+    false # Quietly fail for now.
   end
 
   def verified_identity=(hash)
@@ -188,7 +187,7 @@ class EasyRackOpenIDProcessing
   end
 
   def ok(text, content_type = 'text/html')
-    [200,{"Content-Type" => content_type, 'Content-Length'=> text.length},[text]]
+    [200,{"Content-Type" => content_type, 'Content-Length'=> text.length.to_s},[text]]
   end
 
 end

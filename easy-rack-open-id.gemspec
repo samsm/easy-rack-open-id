@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{easy-rack-open-id}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sam Schenkman-Moore"]
-  s.date = %q{2009-12-20}
+  s.date = %q{2010-01-17}
   s.description = %q{You supply OpenIDs, this keeps anyone but people with access to those ids from getting through. You don't even have to make a form. :)}
   s.email = %q{samsm@samsm.com}
   s.extra_rdoc_files = [
