@@ -1,18 +1,18 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "easy-rack-openid/version"
+require "easy-rack-open-id/version"
 
 Gem::Specification.new do |s|
-  s.name        = "easy-rack-openid"
+  s.name        = "easy-rack-open-id"
   s.version     = Easy::Rack::Openid::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Sam Schenkman-Moore"]
   s.email       = ["samsm@samsm.com"]
-  s.homepage    = "http://github.com/samsm/easy-rack-openid"
+  s.homepage    = "http://github.com/samsm/easy-rack-open-id"
   s.summary     = %q{Super easy OpenID protection for Rack.}
   s.description = %q{You supply OpenIDs, this keeps anyone but people with access to those ids from getting through. You don't even have to make a form. :)}
 
-  s.rubyforge_project = "easy-rack-openid"
+  s.rubyforge_project = "easy-rack-open-id"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -85,7 +85,7 @@ var openid = {
 	cookie_name: 'openid_provider',
 	cookie_path: '/',
 	
-	img_path: '/easy-rack-openid-assets/openid-selector/images/',
+	img_path: '/easy-rack-open-id-assets/openid-selector/images/',
 	
 	input_id: null,
 	provider_url: null,

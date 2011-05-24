@@ -1,4 +1,4 @@
-module EasyRackOpenid
+module EasyRackOpenId
   class Server
     def initialize(app, options ={})
       @app = app

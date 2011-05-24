@@ -1,4 +1,4 @@
-module EasyRackOpenid
+module EasyRackOpenId
   class Processing
 
     attr_accessor :env, :options
@@ -31,7 +31,7 @@ module EasyRackOpenid
     end
 
     def asset_prefix
-      '/easy-rack-openid-assets'
+      '/easy-rack-open-id-assets'
     end
 
     def gem_public_path

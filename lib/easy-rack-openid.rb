@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/easy-rack-openid/server'
-require File.dirname(__FILE__) + '/easy-rack-openid/processing'
+require File.dirname(__FILE__) + '/easy-rack-open-id/server'
+require File.dirname(__FILE__) + '/easy-rack-open-id/processing'
 
-module EasyRackOpenid
+module EasyRackOpenId
   def initialize(app, options ={})
     @app = app
     @options = options

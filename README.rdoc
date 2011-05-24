@@ -57,4 +57,4 @@ Right now allowed_identifiers and identity_match cannot both be used at once.
 :policy_url
 
 == OpenID Selector, Real-selector
-This package includes nice-looking default login forms from the "openid-selector" and "real-openid-selector" projects. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-openid-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.
+This package includes nice-looking default login forms from the "openid-selector" and "real-openid-selector" projects. This gem will serve the necessary javascript/images, but it may be more efficient to copy public/easy-rack-open-id-assets into your application's public directory so that Apache/Nginx/whatever can serve those file directly.

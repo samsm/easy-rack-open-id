@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    easy-rack-openid (0.3.0)
+    easy-rack-open-id (0.3.0)
       rack-openid (~> 1.3)
 
 GEM
@@ -32,7 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  easy-rack-openid!
+  easy-rack-open-id!
   openid_mongodb_store
   ruby-debug
   shotgun
