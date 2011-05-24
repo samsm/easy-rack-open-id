@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'rack'
-# require 'rack/openid'
-require 'vendor/rack-openid/lib/rack/openid'
-require 'lib/easy_rack_open_id'
+require 'rack/openid'
+# require 'vendor/rack-openid/lib/rack/openid'
+require 'lib/easy-rack-openid'
 
 use Rack::ShowExceptions
 
@@ -19,5 +19,5 @@ puts "Remember shotgun won't work with memory store!"
 
 use Rack::Session::Cookie
 use Rack::OpenID #, OpenidMongodbStore::Store.new
-use EasyRackOpenID, :allowed_identifiers => ['http://samsm.com/'], :after_logout_path => '/login', :required => ['nickname']
+use EasyRackOpenid::Server, :allowed_identifiers => ['http://samsm.com/'], :after_logout_path => '/login', :required => ['nickname']
 run HelloWorld.new
