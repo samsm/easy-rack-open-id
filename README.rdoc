@@ -1,20 +1,18 @@
-= EasyRackOpenID. Simplifies OpenID login for Rack apps.
+= EasyRackOpenId. Simplifies OpenID login for Rack apps.
 
 == Installation
-gem install easy-rack-open-id
-(depends on rack-openid which depends on ruby-openid)
 
-Then, you:
+  gem install easy-rack-open-id
   require 'rack/openid'
   use Rack::Session::Cookie
   use Rack::OpenID
-  use EasyRackOpenID, :allowed_identifiers => ['http://example.com/']
+  use EasyRackOpenId::Server, :allowed_identifiers => ['http://example.com/']
   run lambda {|env| [ 200, { 'Content-Type' => 'text/plain' }, [ 'Authenticated!' ] ] }
 
 There's an example in config.ru
 
 
-Basically, slap EasyRackOpenID in front of the App you want to protect. Rack::OpenID needs to be above it. Data from the login (identifier, registration info) will be made available in session[:verified_identity]
+Basically, slap EasyRackOpenId in front of the App you want to protect. Rack::OpenID needs to be above it. Data from the login (identifier, registration info) will be made available in session[:verified_identity]
 
   session['verified_identity']['identifier'] # http://samsm.com/
   session['verified_identity']['nickname']   # samsm
@@ -30,7 +28,7 @@ OpenID needs some storage to remember cryptographic nuts and bolts. Rack:OpenID 
 
 == Too Many Options!
 
-With no arguments, EasyRackOpenID will only allow users with a verified OpenID to proceed. It won't care what that identity is.
+With no arguments, EasyRackOpenId will only allow users with a verified OpenID to proceed. It won't care what that identity is.
 
 :allowed_identifiers - when used, only identities in the provided array will be allowed access.
 
