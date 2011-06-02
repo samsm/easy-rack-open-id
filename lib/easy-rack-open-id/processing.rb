@@ -73,7 +73,7 @@ module EasyRackOpenId
     end
 
     def path
-      env['REQUEST_PATH']
+      env['PATH_INFO']
     end
 
     def present_login_options
