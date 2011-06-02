@@ -1,6 +1,4 @@
 require 'rubygems'
-require 'rack'
-require 'rack/openid'
 require 'lib/easy-rack-open-id'
 
 use Rack::ShowExceptions

@@ -1,3 +1,6 @@
+require 'rack'
+require 'rack/openid'
+
 require File.dirname(__FILE__) + '/easy-rack-open-id/server'
 require File.dirname(__FILE__) + '/easy-rack-open-id/processing'
 

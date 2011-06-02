@@ -3,7 +3,7 @@
 == Installation
 
   gem install easy-rack-open-id
-  require 'rack/openid'
+  require 'easy-rack-open-id'
   use Rack::Session::Cookie
   use Rack::OpenID
   use EasyRackOpenId::Server, :allowed_identifiers => ['http://example.com/']
