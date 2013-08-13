@@ -188,7 +188,7 @@ module EasyRackOpenId
     end
 
     def ok(text, content_type = 'text/html')
-      [200,{"Content-Type" => content_type, 'Content-Length'=> text.length.to_s},[text]]
+      [200,{"Content-Type" => content_type},[text]]
     end
 
   end
